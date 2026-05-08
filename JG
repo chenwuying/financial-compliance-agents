@@ -1,0 +1,17 @@
+├── agents/
+│   ├── regulation_parser.py      # 第一层Agent
+│   ├── cross_validation.py       # 对抗辩论Agent
+│   └── report_generator.py       # 报告生成Agent
+├── orchestrator/
+│   └── langgraph_flow.py         # 编排逻辑
+├── prompts/
+│   ├── parsing_prompts.json
+│   ├── debate_prompts.json
+│   └── report_prompts.json
+├── tests/
+│   └── regression_tests/         # Prompt回归测试
+├── demo/
+│   ├── sample_contract.pdf
+│   ├── debate_chat_log.txt
+│   └── sample_report.pdf
+└── README.md                     # 包含上面所有演示说明
