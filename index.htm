@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金融级智能合规审查多 Agent 系统 - 在线演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            background: rgba(148, 163, 184, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(167, 139, 250, 0.4);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .icon {
+            font-size: 1.6rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .metric-item {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #a78bfa;
+            line-height: 1.2;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 0.5rem;
+        }
+
+        .debate-box {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            border-left: 4px solid #a78bfa;
+        }
+
+        .debate-box .agent-a {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+
+        .debate-box .agent-b {
+            color: #f472b6;
+            font-weight: 600;
+        }
+
+        .debate-box .conclusion {
+            color: #34d399;
+            font-weight: 600;
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .flow-step .step-num {
+            background: linear-gradient(135deg, #a78bfa, #818cf8);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-arrow {
+            color: #64748b;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .repo-link {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 1rem;
+            color: #94a3b8;
+        }
+
+        .repo-link a {
+            color: #a78bfa;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed #a78bfa;
+        }
+
+        .repo-link a:hover {
+            color: #c4b5fd;
+        }
+
+        @media (max-width: 600px) {
+            .flow-arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 智能合规审查 · 多 Agent 协作系统</h1>
+            <p>长链推理 · 对抗辩论 · 自动报告生成</p>
+            <div class="badge-row">
+                <span class="badge">Claude 3.5 Sonnet</span>
+                <span class="badge">DeepSeek-V2</span>
+                <span class="badge">MiMo 系列</span>
+                <span class="badge">LangGraph 编排</span>
+            </div>
+        </header>
+
+        <!-- 关键指标卡片 -->
+        <div class="card">
+            <h2><span class="icon">📊</span> 核心落地指标</h2>
+            <div class="metrics-grid">
+                <div class="metric-item">
+                    <div class="metric-value">500+</div>
+                    <div class="metric-label">日处理文档</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">90%</div>
+                    <div class="metric-label">审查效率提升</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">42%</div>
+                    <div class="metric-label">风险遗漏率下降</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">8亿</div>
+                    <div class="metric-label">月均 Token 消耗</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">30%</div>
+                    <div class="metric-label">成本降低（MiMo 加速）</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 系统流程 -->
+        <div class="card">
+            <h2><span class="icon">⚙️</span> 三层 Agent 协作流</h2>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="step-num">1</div>
+                    <div style="font-weight:600;">法规解析</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;">思维链拆解检查点</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-num">2</div>
+                    <div style="font-weight:600;">交叉验证</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;">对抗式辩论</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="step-num">3</div>
+                    <div style="font-weight:600;">报告生成</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;">分段报告 & 改写建议</div>
+                </div>
+            </div>
+            <p style="margin-top:1rem; color:#94a3b8; text-align:center; font-size:0.9rem;">
+                所有流程基于 <strong>LangGraph</strong> 动态编排，支持并行分支与条件路由，推理日志全回放可审计。
+            </p>
+        </div>
+
+        <!-- 辩论演示 -->
+        <div class="card">
+            <h2><span class="icon">🗣️</span> 实时辩论演示（模拟）</h2>
+            <p style="margin-bottom:1rem; color:#94a3b8; font-size:0.9rem;">
+                文档：某理财产品说明书第4.2条 — 风险提示措辞合规性
+            </p>
+            <div class="debate-box">
+<span class="agent-a">[合规官 Agent]</span> 该条款使用了“大概率获得正收益”的表述，暗示保本，违反净值化管理要求，应判定为高风险。
+<span class="agent-b">[业务方 Agent]</span> 原文在后半句已补充“不保证本金安全”，且整体语境未承诺收益，建议降为中风险，并添加标准化风险提示。
+<span class="agent-a">[合规官 Agent]</span> 引用银保监发〔2022〕12号第三条，类似表述已被处罚案例覆盖。维持高风险，建议删除“大概率”。
+<span class="agent-b">[业务方 Agent]</span> 接受删除“大概率”，但保留“力争”类措辞，修改后符合惯例。
+<span class="conclusion">[辩论结论]</span> 高风险 → 修改为“力求”且全文杜绝绝对化表述，统一纳入风险提示模板。
+            </div>
+        </div>
+
+        <!-- 工具链与开发环境 -->
+        <div class="card">
+            <h2><span class="icon">🛠️</span> AI 开发工具链</h2>
+            <div style="display:flex; flex-wrap:wrap; gap:1.5rem; margin-top:0.5rem;">
+                <div><strong>核心模型：</strong>Claude 3.5 Sonnet, DeepSeek-V2, MiMo 系列</div>
+                <div><strong>Agent 工具：</strong>Cline, Aider, Cursor</div>
+                <div><strong>编排框架：</strong>LangGraph + 自研调度器</div>
+                <div><strong>检索增强：</strong>向量检索判例库、法规库</div>
+                <div><strong>质量保障：</strong>Prompt 版本控制 & 回归测试</div>
+            </div>
+        </div>
+
+        <div class="repo-link">
+            <p>👉 查看完整仓库、技术文档与示例报告：<br>
+            <a href="https://github.com/chenwuying/financial-compliance-agents" target="_blank">github.com/chenwuying/financial-compliance-agents</a></p>
+            <p style="font-size:0.8rem; margin-top:0.5rem;">* 本页为 GitHub Pages 演示地址，用于展示多 Agent 协作逻辑与落地指标</p>
+        </div>
+    </div>
+</body>
+</html>
